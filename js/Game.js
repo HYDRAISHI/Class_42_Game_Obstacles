@@ -38,6 +38,11 @@ class Game {
             car4 = createSprite(700,200);
             car4.addImage("car4",car4_img);
             cars = [car1, car2, car3, car4];
+
+            car1.debug = true;
+            car2.debug = true;
+            car3.debug = true;
+            car4.debug = true;
           }
         
           play(){
@@ -73,15 +78,21 @@ class Game {
                 if (index === player.index){
                   cars[index - 1].shapeColor = "red";
                   camera.position.x = displayWidth/2;
-                  camera.position.y = cars[index-1].y
+                  camera.position.y = cars[index-1].y;
+
+                  if(cars[index - 1].isTouching(obstacleGroup)){
+                    yVel -= 0.9;
+                    //playing the sound
+                    slidingSound.play();
+                  }
                 }
                
               }
-        
+                                      
             }
         
-            
-            if(player.distance < 2150){
+            console.log(car1.y);
+            if(player.distance < 3000){
               if(keyIsDown(38) && player.index !== null){
                   yVel += 0.9;
                   if(keyIsDown(37)){

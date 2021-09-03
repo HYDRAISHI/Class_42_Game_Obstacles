@@ -5,8 +5,10 @@ var playerCount;
 var allPlayers;
 var distance = 0;
 var database;
-
+var obstacle, obstacleImg, x,y;
+var obstacleGroup;
 var form, player, game;
+var slidingSound;
 
 var cars, car1, car2, car3, car4;
 var track, car1_img, car2_img, car3_img, car4_img;
@@ -18,6 +20,8 @@ function preload(){
   car3_img = loadImage("../images/car3.png");
   car4_img = loadImage("../images/car4.png");
   ground = loadImage("../images/ground.png");
+  obstacleImg = loadImage("images/f1.png");
+  slidingSound = loadSound("sound/sliding.mp3");
 }
 
 function setup(){
@@ -25,6 +29,7 @@ function setup(){
   database = firebase.database();
   gameState = 0;
   distance = 0;
+  
  // finishedPlayers = 0;
   yVel = 0;
   xVel = 0;
@@ -33,11 +38,22 @@ function setup(){
   game = new Game();
   game.getState();
   game.start();
+
+  obstacleGroup = createGroup();
+  for(var i = 0; i < 7; i += 1){
+    x = random(200,950)
+    y = random(-height*4, height-3)
+
+    obstacle = createSprite(x,y);
+    obstacle.addImage("obsIMG", obstacleImg);
+    obstacleGroup.add(obstacle);
+  }
+  obstacle.debug = true;
 }
 
 
 function draw(){
-   //start the game
+
    background(200, 200, 255);
 
    //start the game
@@ -51,6 +67,7 @@ function draw(){
    }
    if (gameState === 2) {
      console.log("End");
-   }}
+   }
+  }
  
   
